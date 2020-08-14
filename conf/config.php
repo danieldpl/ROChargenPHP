@@ -1,7 +1,5 @@
 <?php
 
-    // Easy Configure
-
     $config = array(
         // DB Config
         'hostname'      => '127.0.0.1',
@@ -12,7 +10,7 @@
         // Debug
         'debug'         => true,
 
-        // Sex Character in db `char` table
+        // if your client(hexed) is 20150619+ change to true
         'sexCharTable'  => true,
     );
 
