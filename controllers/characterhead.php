@@ -58,17 +58,18 @@ class CharacterHead_Controller extends Controller {
 	 */
 	private function getPlayerData($pseudo)
 	{
-		$data = $this->query("
-			SELECT
-				char.hair, char.hair_color,
-				char.head_top, char.head_mid, char.head_bottom,
-				login.sex
-			FROM `char`
-			LEFT JOIN `login` ON login.account_id = char.account_id
-			WHERE char.name = ?
-			LIMIT 1",
-			array($pseudo)
-		);
+		$sql = "SELECT
+					char.hair, char.hair_color,
+					char.head_top, char.head_mid, char.head_bottom, ";
+		if ( Controller::$sexCharTable )
+			$sql .= "`char`.`sex` ";
+		else
+			$sql .= "`login`.`sex` ";
+		$sql .= "FROM `char`
+				 LEFT JOIN `login` ON login.account_id = char.account_id
+				 WHERE char.name = ?
+				 LIMIT 1";
+		$data = $this->query($sql,array($pseudo));
 
 		// No character found ? Load a default character ?
 		if( empty($data) ) {

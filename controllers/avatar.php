@@ -59,23 +59,25 @@ class Avatar_Controller extends Controller {
 	 */
 	private function getPlayerData($pseudo)
 	{
-		$data = $this->query("
+		$sql = "
 			SELECT
 				char.name,
 				char.class, char.clothes_color,
 				char.hair, char.hair_color,
 				char.head_top, char.head_mid, char.head_bottom,
 				char.robe, char.weapon, char.shield,
-				char.online, char.base_level, char.job_level,
-				login.sex,
-				guild.emblem_data
+				char.online, char.base_level, char.job_level, ";
+		if ( Controller::$sexCharTable )
+			$sql .= "`char`.`sex` ";
+		else
+			$sql .= "`login`.`sex` ";
+		$sql .= "guild.emblem_data
 			FROM `char`
 			LEFT JOIN `login` ON login.account_id = char.account_id
 			LEFT JOIN `guild` ON guild.guild_id = char.guild_id
 			WHERE char.name = ?
-			LIMIT 1",
-			array($pseudo)
-		);
+			LIMIT 1";
+		$data = $this->query($sql, array($pseudo));
 
 		// No player found ?
 		// No character found ? Load a default character ?

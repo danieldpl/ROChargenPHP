@@ -10,17 +10,16 @@
 ob_start();
 
 
-
 // Error manager
 ini_set('display_errors', 0);
-error_reporting(E_ALL);
+error_reporting(0);
 
 
 
 define('__ROOT__', dirname(__FILE__) . '/'); 
 
-
-
+// Load Conf File
+require_once( __ROOT__ . 'conf/config.php');
 // Loading CORE files
 require_once( __ROOT__ . 'core/class.Debug.php');
 require_once( __ROOT__ . 'core/class.Controller.php');
@@ -30,26 +29,29 @@ require_once( __ROOT__ . 'core/class.DB.php');
 
 
 
-// Set on the debug
-//Debug::enable();
+
+if ($config['debug'])
+	// Set on the debug
+	Debug::enable();
 
 
 
 /// Configs ---------------------------------------------------------
 //- Cache
-Cache::$path          =     __ROOT__ . "cache/"  ;   // Cache directory
-Cache::$time          =     15 * 60              ;   // cache for 15 mins (set to 0 if you want to disable cache).
+Cache::$path          =     __ROOT__ . "cache/"    ;   // Cache directory
+Cache::$time          =     15 * 60                ;   // cache for 15 mins (set to 0 if you want to disable cache).
 //- Client
-Client::$path         =     __ROOT__ . "client/" ;   // Define where your client path is (where you put your grfs, data, etc.)
-Client::$data_ini     =     "DATA.INI"           ;   // The name of your DATA.INI (to locate your grfs, if not set: grfs will not be loaded)
-Client::$AutoExtract  =     true                 ;   // If true, client will save extracted files from GRF into the data folder.
+Client::$path         =     __ROOT__ . "client/"   ;   // Define where your client path is (where you put your grfs, data, etc.)
+Client::$data_ini     =     "DATA.INI"             ;   // The name of your DATA.INI (to locate your grfs, if not set: grfs will not be loaded)
+Client::$AutoExtract  =     true                   ;   // If true, client will save extracted files from GRF into the data folder.
 //- DB
-DB::$path             =     __ROOT__ . "db/"     ;   // The db folder (where is located the lua likes files)
+DB::$path             =     __ROOT__ . "db/"       ;   // The db folder (where is located the lua likes files)
 //- Sql
-Controller::$hostname =     "127.0.0.1"          ;   // Mysql Host
-Controller::$database =     "ragnarok"           ;   // Database Name
-Controller::$username =     "ragnarok"           ;   // Database Username
-Controller::$password =     "ragnarok"           ;   // Database Pass
+Controller::$hostname =     $config['hostname']    ;   // Mysql Host
+Controller::$database =     $config['database']    ;   // Database Name
+Controller::$username =     $config['username']    ;   // Database Username
+Controller::$password =     $config['password']    ;   // Database Pass
+Controller::$sexCharTable = $config['sexCharTable'];   // Sex Char Table For SQL	
 /// -----------------------------------------------------------------
 
 
