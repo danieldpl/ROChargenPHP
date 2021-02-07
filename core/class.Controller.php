@@ -13,10 +13,11 @@ defined("__ROOT__") OR die();
 
 class Controller
 {
-	static public $hostname    = "";
-	static public $database    = "";
-	static public $username    = "";
-	static public $password    = "";
+	static public $hostname    	= "";
+	static public $database    	= "";
+	static public $username    	= "";
+	static public $password    	= "";
+	static public $sexCharTable	= false;
 
 
 	private $db;
